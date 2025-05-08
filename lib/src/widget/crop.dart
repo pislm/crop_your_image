@@ -620,6 +620,7 @@ class _CropEditorState extends State<_CropEditor> {
               Listener(
                 onPointerSignal: _handlePointerSignal,
                 child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onScaleStart: widget.interactive ? _handleScaleStart : null,
                   onScaleUpdate: widget.interactive ? _handleScaleUpdate : null,
                   child: Container(
@@ -665,7 +666,7 @@ class _CropEditorState extends State<_CropEditor> {
                   ),
                 ),
               ),
-              if (!widget.interactive && !widget.fixCropRect)
+              if (!widget.fixCropRect)
                 Positioned(
                   left: _readyState.cropRect.left,
                   top: _readyState.cropRect.top,
