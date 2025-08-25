@@ -613,21 +613,30 @@ class _CropEditorState extends State<_CropEditor> {
         ? Stack(
             clipBehavior: widget.clipBehavior,
             children: [
-              // Show the image immediately while processing
+              // Show the image immediately while processing with same structure as ready state
               Container(
                 color: widget.baseColor,
                 width: viewportSize.width,
                 height: viewportSize.height,
-                child: Center(
-                  child: Image.memory(
-                    widget.image,
-                    fit: BoxFit.contain,
-                    filterQuality: widget.filterQuality,
-                  ),
+                child: Stack(
+                  children: [
+                    SizedBox.expand(),
+                    // Use the same positioning approach as the ready state
+                    // but with Image.memory's built-in fit logic which matches BoxFit.contain
+                    Positioned.fill(
+                      child: Image.memory(
+                        widget.image,
+                        fit: BoxFit.contain,
+                        filterQuality: widget.filterQuality,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // Show progress indicator overlay if needed
-              if (widget.progressIndicator != const SizedBox.shrink())
+              // Show progress indicator overlay only if it's not the default shrink widget
+              if (!(widget.progressIndicator is SizedBox &&
+                  ((widget.progressIndicator as SizedBox).width ?? 0.0) == 0.0 &&
+                  ((widget.progressIndicator as SizedBox).height ?? 0.0) == 0.0))
                 Center(
                   child: Container(
                     padding: const EdgeInsets.all(16),
