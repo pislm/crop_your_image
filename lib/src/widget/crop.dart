@@ -626,7 +626,7 @@ class _CropEditorState extends State<_CropEditor> {
                     Positioned.fill(
                       child: Image.memory(
                         widget.image,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                         filterQuality: widget.filterQuality,
                       ),
                     ),
